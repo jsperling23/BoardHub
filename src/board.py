@@ -5,18 +5,39 @@ class Board():
         self.dims = None
         self.price = None
         self.description = None
+        self.location = None
         self.contact = None
 
     def board_builder(self, details: dict) -> bool:
         """
-        Function accepts dictionary. Returns False if the list is empty
+        Function accepts dictionary. Returns False if the dict is empty
         otherwise it will fill out the class instance attributes and return
         True.
         """
         if not details:
             return False
 
-        for key, value in details.items():
-            pass
+        self.title = details['item']['name']
+        self.pictures = details['item']['image']
+        self.price = details['item']['offers']['price']
+        self.description = details['item']['description']
+        self.location = (
+            details['item']['offers']['availableAtOrFrom']['geo']['latitude'],
+            details['item']['offers']['availableAtOrFrom']['geo']['latitude'])
 
         return True
+
+    def to_dict(self) -> dict:
+        """
+        Returns a dictionary form of the object
+        """
+        board = {
+            "title": self.title,
+            "description": self.description,
+            "price": self.price,
+            "location": self.location,
+            "pictures": self.pictures,
+            "dims": self.dims,
+            "contact": self.contact,
+        }
+        return board

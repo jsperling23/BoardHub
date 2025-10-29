@@ -1,6 +1,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup
+from board import Board
 
 # do something
 if __name__ == "__main__":
@@ -12,4 +13,6 @@ if __name__ == "__main__":
     if raw_list and raw_list.string:
         board_list = json.loads(raw_list.string)
         for board in board_list["itemListElement"]:
-            print(board['item'])
+            listing = Board()
+            listing.board_builder(board)
+            print(listing.to_dict())
