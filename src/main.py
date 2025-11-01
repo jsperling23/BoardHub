@@ -15,4 +15,5 @@ if __name__ == "__main__":
         for board in board_list["itemListElement"]:
             listing = Board()
             listing.board_builder(board)
-            print(listing.to_dict())
+            print(listing.download_images())
+            break

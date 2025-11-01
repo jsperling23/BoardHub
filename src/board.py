@@ -1,3 +1,7 @@
+import requests
+import pytesseract
+
+
 class Board():
     def __init__(self):
         self.title = None
@@ -24,6 +28,26 @@ class Board():
         self.location = (
             details['item']['offers']['availableAtOrFrom']['geo']['latitude'],
             details['item']['offers']['availableAtOrFrom']['geo']['latitude'])
+
+        return True
+
+    def download_images(self) -> bool:
+        """
+        Downloads images and saves them
+        """
+        if not self.pictures:
+            return False
+
+        ocr_buf = []
+        count = 0
+        for image_url in self.pictures:
+            image = requests.get(image_url)
+            with open(f'images/image{count}.png', "wb") as pic:
+                pic.write(image.content)
+            data = pytesseract.image_to_string(f'images/image{count}.png')
+            count += 1
+            ocr_buf.append(data)
+            print(ocr_buf)
 
         return True
 
